@@ -38,6 +38,8 @@ Content Gap Detection
 Best Time to Post
 Trending Topics Detection
 Audience Demand Insights
+
+
 🛠 Tech Stack
 Backend
 FastAPI – High-performance backend for data processing and AI workflows
