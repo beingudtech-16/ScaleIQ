@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script type="module">
+    import { protectPage } from "./authGuard.js";
+    protectPage();
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScaleUp Profile Setup</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-200 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center mb-6">Setup Your Profile</h1>
+
+    <form id="profileForm" class="space-y-6">
+
+      <div>
+        <label class="block text-sm font-semibold">Instagram Username</label>
+        <input id="instagram" class="w-full px-4 py-3 border rounded-xl" placeholder="yourbrand" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold">Brand Category</label>
+        <select id="category" class="w-full px-4 py-3 border rounded-xl">
+          <option disabled selected>Select category</option>
+          <option>Fashion & Apparel</option>
+          <option>Technology</option>
+          <option>Health & Fitness</option>
+          <option>Food & Beverage</option>
+          <option>Digital Creator</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold">Brand Description</label>
+        <textarea id="description" rows="3" class="w-full px-4 py-3 border rounded-xl"
+          placeholder="Tell us about your brand..."></textarea>
+      </div>
+
+      <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl">
+        Continue →
+      </button>
+
+    </form>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAfepMs17arZb5G1YvwNS8JPuawIoWXW2U",
+      authDomain: "scaleup-542a9.firebaseapp.com",
+      projectId: "scaleup-542a9",
+      storageBucket: "scaleup-542a9.firebasestorage.app",
+      messagingSenderId: "612010083462",
+      appId: "1:612010083462:web:3ecb8f49a06351a0df7d07"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    document.getElementById("profileForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const user = auth.currentUser;
+      if (!user) {
+        alert("You must be logged in to save your profile.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const instagram = document.getElementById("instagram").value.trim();
+      const category = document.getElementById("category").value;
+      const description = document.getElementById("description").value.trim();
+
+      if (!instagram) {
+        alert("Please enter Instagram username");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/save-profile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user.uid,
+            instagram,
+            category,
+            description
+          })
+        });
+
+        if (res.ok) {
+          console.log("✅ Profile saved to Firestore");
+          localStorage.setItem("profileData", JSON.stringify({ instagram, category, description }));
+          window.location.href = "temp.html";
+        } else {
+          const err = await res.json();
+          alert("Error saving profile: " + err.error);
+        }
+      } catch (err) {
+        alert("Failed to connect to server: " + err.message);
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

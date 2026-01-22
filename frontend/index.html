@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Profile Health &amp; Sentiment Analysis - ScaleUp</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#5E5CE6",
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        },
+                        purple: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                        },
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0B0E14",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#161B22",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                        '2xl': "1.25rem",
+                        '3xl': "2rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body { font-family: 'Inter', sans-serif; }
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .progress-ring { transform: rotate(-90deg); }
+        .sentiment-donut { transform: rotate(-90deg); }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-200">
+    <div class="flex min-h-screen">
+        <aside
+            class="w-72 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark flex flex-col p-6 sticky top-0 h-screen">
+            <div class="flex items-center gap-3 mb-10 px-2">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white">rocket_launch</span>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight">ScaleUp</h1>
+                    <p
+                        class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none">
+                        AI Intelligence</p>
+                </div>
+            </div>
+            <nav class="space-y-1 flex-1">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 text-primary transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined">health_and_safety</span>
+                    <span class="font-medium">Profile Health</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    href="temp.html#competitive-insights">
+                    <span class="material-symbols-outlined">insights</span>
+                    <span class="font-medium">Competitive Insights</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    href="temp.html#growth-blueprint">
+                    <span class="material-symbols-outlined">architecture</span>
+                    <span class="font-medium">Growth Blueprint</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    href="temp.html#smart-scheduling">
+                    <span class="material-symbols-outlined">schedule</span>
+                    <span class="font-medium">Smart Scheduling</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    href="temp.html#ai-creative-engine">
+                    <span class="material-symbols-outlined">auto_awesome</span>
+                    <span class="font-medium">AI Creative Engine</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    href="temp.html">
+                    <span class="material-symbols-outlined">groups</span>
+                    <span class="font-medium">Creator Match</span>
+                </a>
+            </nav>
+            <div class="mt-auto space-y-4">
+                <button
+                    class="w-full py-4 bg-primary text-white rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 hover:opacity-90 transition-opacity">
+                    <span class="material-symbols-outlined text-lg">add_circle</span>
+                    Generate Report
+                </button>
+            </div>
+        </aside>
+        <main class="flex-1 overflow-y-auto max-h-screen p-8">
+            <header class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-8 flex-1">
+                    <h2 class="text-2xl font-bold dark:text-white">Profile Health</h2>
+                    <div class="relative flex-1 max-w-md">
+                        <span
+                            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                        <input id="username"
+                            class="w-full bg-white dark:bg-card-dark border-none rounded-full py-3 pl-12 pr-4 shadow-sm focus:ring-2 focus:ring-teal-500 dark:text-white transition-shadow"
+                            placeholder="Search username..." type="text" />
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="scrape()"
+                        class="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity flex items-center gap-2">
+                        <span class="material-symbols-outlined">search</span>
+                        Analyze
+                    </button>
+                    <div
+                        class="flex items-center gap-3 bg-white dark:bg-card-dark p-1 pr-4 rounded-full shadow-sm border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-teal-300 to-purple-400">
+                        </div>
+                        <div class="text-xs">
+                            <p class="font-bold leading-tight" id="username-display">ScaleUp</p>
+                            <p class="text-indigo-600 font-bold uppercase text-[9px]">Growth Tier</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="loading" class="hidden text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                <p class="mt-4 text-slate-500">Analyzing profile...</p>
+            </div>
+
+            <div id="error"
+                class="hidden mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl text-red-600 dark:text-red-400">
+            </div>
+
+            <div id="results" class="hidden">
+                <div class="grid grid-cols-12 gap-8 mb-10">
+                    <div
+                        class="col-span-12 lg:col-span-8 bg-white dark:bg-card-dark rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row items-center gap-10">
+                        <div class="relative w-48 h-48 flex items-center justify-center">
+                            <svg class="progress-ring w-full h-full" viewBox="0 0 200 200">
+                                <circle class="text-slate-100 dark:text-slate-800" cx="100" cy="100" r="80"
+                                    fill="transparent" stroke="currentColor" stroke-width="14">
+                                </circle>
+                                <circle class="text-primary" cx="100" cy="100" r="80" fill="transparent"
+                                    stroke="currentColor" stroke-dasharray="502.6" stroke-dashoffset="40.2"
+                                    stroke-linecap="round" stroke-width="14" id="healthCircle">
+                                </circle>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-4xl font-bold" id="healthScore">--</span>
+                                <span class="mt-1 px-3 py-0.5 rounded-full text-xs font-semibold
+             bg-indigo-50 text-primary
+             dark:bg-indigo-900/30 dark:text-indigo-300
+             transition-colors">
+                                    Healthy
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex-1 space-y-4 text-center md:text-left">
+                            <h4 class="text-2xl font-bold">Profile Health Snapshot</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                                Your account is currently in the top 5% of creators in your niche. Your
+                                engagement-to-follower ratio is exceptionally strong this week.
+                            </p>
+                            <div class="flex flex-wrap gap-6 justify-center md:justify-start pt-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-teal-500">trending_up</span>
+                                    <div>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Growth
+                                        </p>
+                                        <p class="text-lg font-bold" id="growthRate">--</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-purple-500">favorite</span>
+                                    <div>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                            Engagement
+                                        </p>
+                                        <p class="text-lg font-bold" id="engagementRate">--</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-orange-400">visibility</span>
+                                    <div>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Reach
+                                        </p>
+                                        <p class="text-lg font-bold" id="reach">--</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="col-span-12 lg:col-span-4 bg-primary text-white rounded-3xl p-8 shadow-xl relative overflow-hidden flex flex-col justify-center">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                        <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-indigo-400/20 rounded-full blur-3xl">
+                        </div>
+                        <div class="flex items-center gap-2 mb-6 relative z-10">
+                            <span class="material-symbols-outlined text-indigo-200">lightbulb</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-indigo-200">
+                                Tip of the Day
+                            </span>
+                        </div>
+                        <h5 class="text-2xl font-bold mb-4 relative z-10" id="tipOfDay">
+                            Consistency is your superpower.
+                        </h5>
+                        <p class="text-indigo-100 text-base leading-relaxed relative z-10 mb-6" id="tipContent">
+                            Your audience connects most with your process. Share a behind-the-scenes moment today to
+                            deepen
+                            trust.
+                        </p>
+                        <div class="flex items-center gap-2 text-sm font-semibold text-indigo-200 relative z-10">
+                            <span class="material-symbols-outlined text-sm">stars</span>
+                            Today's focus
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold">Top Performing Posts</h3>
+                        <button class="text-sm font-bold text-indigo-600 hover:text-teal-700">View All</button>
+                    </div>
+                    <div class="flex gap-6 overflow-x-auto pb-4 no-scrollbar" id="topPostsContainer">
+                        <div class="text-center py-8 text-slate-500">Loading posts...</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-8 mb-10">
+                    <div
+                        class="col-span-12 lg:col-span-7 bg-white dark:bg-card-dark rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800">
+                        <h4 class="text-xl font-bold mb-6">Comment Sentiment Analysis</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="relative w-44 h-44 mx-auto">
+                                <svg class="sentiment-donut w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-slate-100 dark:text-slate-800" cx="50" cy="50" r="40"
+                                        fill="transparent" stroke="currentColor" stroke-width="12">
+                                    </circle>
+                                    <circle class="text-slate-300" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="188.4"
+                                        stroke-linecap="round" stroke-width="12">
+                                    </circle>
+                                    <circle class="text-primary" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="75.3"
+                                        stroke-linecap="round" stroke-width="12">
+                                    </circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="text-3xl" id="sentimentEmoji">😊</span>
+                                    <span class="text-[10px] font-bold uppercase text-slate-400 mt-1"
+                                        id="sentimentLabel">
+                                        Very Positive
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="space-y-6">
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-3 h-3 rounded-full bg-primary"></span>
+                                            <span class="font-medium">Happy</span>
+                                        </div>
+                                        <span class="font-bold" id="sentimentHappy">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-3 h-3 rounded-full bg-slate-400"></span>
+                                            <span class="font-medium">Curious</span>
+                                        </div>
+                                        <span class="font-bold" id="sentimentCurious">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-3 h-3 rounded-full bg-slate-200"></span>
+                                            <span class="font-medium">Neutral</span>
+                                        </div>
+                                        <span class="font-bold" id="sentimentNeutral">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-12 lg:col-span-5 space-y-6">
+                        <div
+                            class="bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800/30 rounded-3xl p-6">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-xl">auto_awesome</span>
+                                </div>
+                                <h5 class="font-bold text-indigo-900 dark:text-indigo-100">
+                                    AI Win of the Week
+                                </h5>
+                            </div>
+                            <p class="text-indigo-700 dark:text-indigo-300 text-sm leading-relaxed" id="aiWin">
+                                Loading...
+                            </p>
+                        </div>
+
+                        <div
+                            class="bg-slate-50 dark:bg-slate-900/10 border border-slate-100 dark:border-slate-800 rounded-3xl p-6">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-slate-700 text-white flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-xl">psychology</span>
+                                </div>
+                                <h5 class="font-bold text-slate-900 dark:text-slate-100">
+                                    Tone Analysis
+                                </h5>
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed" id="toneAnalysis">
+                                Loading...
+                            </p>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-card-dark border border-slate-100 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-bold text-slate-400 uppercase mb-1">
+                                        Response Rate
+                                    </p>
+                                    <p class="text-2xl font-bold" id="responseRate">--</p>
+                                </div>
+                                <div
+                                    class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-full flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">bolt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        async function scrape() {
+            const username = document.getElementById("username").value.trim();
+            const loading = document.getElementById("loading");
+            const error = document.getElementById("error");
+            const results = document.getElementById("results");
+
+            if (!username) {
+                error.textContent = "Please enter an Instagram username";
+                error.classList.remove("hidden");
+                return;
+            }
+
+            loading.classList.remove("hidden");
+            results.classList.add("hidden");
+            error.classList.add("hidden");
+
+            try {
+                const res = await fetch("http://localhost:5000/scrape-instagram", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.error || "Failed to scrape profile");
+                }
+
+                displayResults(data);
+                results.classList.remove("hidden");
+            } catch (err) {
+                error.textContent = "Error: " + err.message;
+                error.classList.remove("hidden");
+            } finally {
+                loading.classList.add("hidden");
+            }
+        }
+
+        function displayResults(data) {
+            // Profile info
+            document.getElementById("username-display").textContent = "@" + data.username;
+            const healthScore = data.profileHealth.score;
+            document.getElementById("healthScore").textContent = healthScore + "%";
+
+            // Update health circle - mapping 0-100 to stroke-dashoffset
+            const dashoffset = 502.6 * (1 - healthScore / 100);
+            document.getElementById("healthCircle").setAttribute("stroke-dashoffset", dashoffset);
+
+            // Get engagement and growth rates from real data
+            const engagementRate = data.profileHealth.engagementRate;
+            const components = data.profileHealth.components;
+            const growthScore = components.growth;
+
+            document.getElementById("growthRate").textContent = growthScore.toFixed(1) + "%";
+            document.getElementById("engagementRate").textContent = engagementRate.toFixed(2) + "%";
+
+            // Calculate average reach from followers and engagement
+            const avgReach = Math.round((data.followers * engagementRate) / 100);
+            document.getElementById("reach").textContent = (avgReach / 1000).toFixed(0) + "k";
+
+            // Top Posts - Real data from Apify
+            const topPostsContainer = document.getElementById("topPostsContainer");
+            topPostsContainer.innerHTML = "";
+            if (data.topViewedPosts && data.topViewedPosts.length > 0) {
+                data.topViewedPosts.forEach(post => {
+                    const postEl = document.createElement("div");
+                    postEl.className = "min-w-[300px] bg-white dark:bg-card-dark rounded-3xl p-4 shadow-sm border border-slate-100 dark:border-slate-800 group transition-all";
+                    const views = post.views || 0;
+                    const daysAgo = post.daysAgo !== null ? ` (${post.daysAgo} days ago)` : '';
+                    postEl.innerHTML = `
+                        <div class="aspect-square bg-slate-100 dark:bg-slate-800 rounded-2xl mb-4 overflow-hidden relative">
+                            <div class="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-center p-4">
+                                <div>
+                                    <div class="text-2xl font-bold">${(views / 1000000).toFixed(1)}M</div>
+                                    <div class="text-xs">Views</div>
+                                </div>
+                            </div>
+                            <div class="absolute top-3 right-3 bg-white/95 dark:bg-black/60 backdrop-blur px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+                                <span class="text-[10px] font-bold uppercase tracking-tight">Reel</span>
+                            </div>
+                        </div>
+                        <div class="px-1 space-y-2">
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">${post.caption || 'No caption'}</p>
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-400">${daysAgo}</span>
+                            </div>
+                        </div>
+                    `;
+                    topPostsContainer.appendChild(postEl);
+                });
+            }
+
+            // Real Stats Cards
+            const imagePosts = data.imagePosts;
+            const reels = data.reels;
+
+            // Update tip of day based on account tier and performance
+            const tier = data.accountTier;
+            const tips = {
+                "Small Creator": ["Focus on consistency to build trust", "Post regularly to increase visibility"],
+                "Growing Creator": ["Engage with your community actively", "Analyze what content performs best"],
+                "Large Account": ["Maintain your posting schedule", "Leverage your platform for collaborations"],
+                "Celebrity / Brand": ["Protect your brand value", "Focus on authentic connections with followers"]
+            };
+
+            const tipsList = tips[tier] || ["Keep creating great content", "Engage with your audience"];
+            document.getElementById("tipOfDay").textContent = tipsList[0];
+            document.getElementById("tipContent").textContent = `You're a ${tier}. ${tipsList[1]}`;
+
+            // Sentiment Analysis - Real data from Python sentiment server
+            const sentimentData = data.sentiment || {};
+            const positive = sentimentData.positive || 0;
+            const curious = sentimentData.curious || 0;
+            const neutral = sentimentData.neutral || 0;
+            const summary = sentimentData.summary || "";
+
+            document.getElementById("sentimentHappy").textContent = positive + "%";
+            document.getElementById("sentimentCurious").textContent = curious + "%";
+            document.getElementById("sentimentNeutral").textContent = neutral + "%";
+
+            // Sentiment emoji based on actual analysis
+            if (positive > 60) {
+                document.getElementById("sentimentEmoji").textContent = "😊";
+                document.getElementById("sentimentLabel").textContent = "Very Positive";
+            } else if (positive > 40) {
+                document.getElementById("sentimentEmoji").textContent = "😐";
+                document.getElementById("sentimentLabel").textContent = "Positive";
+            } else if (positive >= curious) {
+                document.getElementById("sentimentEmoji").textContent = "🤔";
+                document.getElementById("sentimentLabel").textContent = "Curious";
+            } else {
+                document.getElementById("sentimentEmoji").textContent = "😕";
+                document.getElementById("sentimentLabel").textContent = "Neutral";
+            }
+
+            // AI Insights - from sentiment summary
+            const lines = summary.split('\n').filter(l => l.trim());
+            document.getElementById("aiWin").textContent = lines[0]?.replace(/^[\d•\-\*]*\s*/, '').substring(0, 150) || `Strong engagement on reels (${reels.averageLikes} avg likes)`;
+            document.getElementById("toneAnalysis").textContent = lines[1]?.replace(/^[\d•\-\*]*\s*/, '').substring(0, 150) || `Your audience ${positive > 50 ? 'responds positively' : 'is engaged'} to your content`;
+
+            // Response rate based on comment engagement
+            const totalComments = imagePosts.averageComments + reels.averageComments;
+            const responseRate = Math.min(100, Math.round((totalComments / (imagePosts.averageLikes + reels.averageLikes)) * 100));
+            document.getElementById("responseRate").textContent = responseRate + "%";
+
+            // Profile stats summary
+            console.log("=== COMPLETE ANALYSIS ===");
+            console.log("Account Tier:", tier);
+            console.log("Followers:", data.followers.toLocaleString());
+            console.log("Health Score:", healthScore + "%");
+            console.log("Engagement Rate:", engagementRate.toFixed(2) + "%");
+            console.log("Image Posts: " + imagePosts.count + " (avg " + imagePosts.averageLikes + " likes, " + imagePosts.averageComments + " comments)");
+            console.log("Reels: " + reels.count + " (avg " + reels.averageViews + " views, " + reels.averageLikes + " likes)");
+            console.log("Sentiment: " + positive + "% positive, " + curious + "% curious, " + neutral + "% neutral");
+            console.log("Comments analyzed: " + data.commentsText.length);
+        }
+
+        // Enter key support
+        document.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter' && event.target.id === 'username') {
+                scrape();
+            }
+        });
+    </script>
+</body>
+
+</html>
