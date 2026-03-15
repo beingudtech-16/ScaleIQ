@@ -3,6 +3,8 @@ import "dotenv/config";
 import { ApifyClient } from "apify-client";
 import axios from "axios";
 
+const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://127.0.0.1:8000";
+
 /* ================= APIFY CLIENT ================= */
 const client = new ApifyClient({
   token: process.env.APIFY_TOKEN,
@@ -145,7 +147,7 @@ export async function scrapeInstagram(username) {
   let sentiment = null;
   try {
     const sentimentRes = await axios.post(
-      "http://127.0.0.1:8000/analyze-summary",
+      `${PYTHON_API_URL}/analyze-summary`,
       { comments: commentsText }
     );
     sentiment = sentimentRes.data;

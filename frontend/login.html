@@ -199,7 +199,7 @@
 
       try {
         await auth.signInWithEmailAndPassword(email, password);
-        window.location.href = "profile.html";
+        window.location.href = "temp.html";
       } catch (error) {
         alert(error.message);
       }
@@ -209,7 +209,7 @@
       const provider = new firebase.auth.GoogleAuthProvider();
       try {
         await auth.signInWithPopup(provider);
-        window.location.href = "profile.html";
+        window.location.href = "temp.html";
       } catch (error) {
         alert(error.message);
       }

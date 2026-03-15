@@ -51,32 +51,9 @@
     </form>
   </div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAfepMs17arZb5G1YvwNS8JPuawIoWXW2U",
-      authDomain: "scaleup-542a9.firebaseapp.com",
-      projectId: "scaleup-542a9",
-      storageBucket: "scaleup-542a9.firebasestorage.app",
-      messagingSenderId: "612010083462",
-      appId: "1:612010083462:web:3ecb8f49a06351a0df7d07"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    document.getElementById("profileForm").addEventListener("submit", async (e) => {
+    document.querySelector("form").addEventListener("submit", (e) => {
       e.preventDefault();
-
-      const user = auth.currentUser;
-      if (!user) {
-        alert("You must be logged in to save your profile.");
-        window.location.href = "login.html";
-        return;
-      }
 
       const instagram = document.getElementById("instagram").value.trim();
       const category = document.getElementById("category").value;
@@ -87,29 +64,21 @@
         return;
       }
 
-      try {
-        const res = await fetch("http://localhost:5000/api/save-profile", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: user.uid,
-            instagram,
-            category,
-            description
-          })
-        });
+      // OPTIONAL: store locally for next page
+      localStorage.setItem("profileData", JSON.stringify({
+        instagram,
+        category,
+        description
+      }));
 
-        if (res.ok) {
-          console.log("✅ Profile saved to Firestore");
-          localStorage.setItem("profileData", JSON.stringify({ instagram, category, description }));
-          window.location.href = "temp.html";
-        } else {
-          const err = await res.json();
-          alert("Error saving profile: " + err.error);
-        }
-      } catch (err) {
-        alert("Failed to connect to server: " + err.message);
-      }
+      console.log("✅ Profile data stored locally:", {
+        instagram,
+        category,
+        description
+      });
+
+      // 🚀 MOVE TO NEXT PAGE (NO BACKEND)
+      window.location.href = "index.html";
     });
   </script>
 

@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: scaleup-web
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: APIFY_TOKEN
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: PYTHON_API_URL
+        value: https://scaleup-python.onrender.com
+
+  - type: web
+    name: scaleup-python
+    env: python
+    plan: free
+    rootDir: python-sentiment
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn sentiment_server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
