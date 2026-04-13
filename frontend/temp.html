@@ -146,7 +146,12 @@
                 </a>
             </nav>
             
-            
+            <div class="mt-auto space-y-4">
+                <button class="w-full py-4 bg-primary text-white rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 hover:opacity-90 transition-opacity">
+                    <span class="material-symbols-outlined text-lg">add_circle</span>
+                    Generate Report
+                </button>
+            </div>
         </aside>
 
         <main class="flex-1 overflow-y-auto max-h-screen">
@@ -575,7 +580,21 @@
                         </section>
                     </div>
                     
-                    >
+                    <div class="col-span-12 lg:col-span-4 space-y-8">
+                        <div class="bg-primary text-white rounded-3xl p-8 shadow-xl relative overflow-hidden flex flex-col min-h-[320px]">
+                            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+                            <div class="absolute -left-10 -top-10 w-48 h-48 bg-indigo-400/20 rounded-full blur-3xl"></div>
+                            <div class="flex items-center gap-2 mb-6 relative z-10">
+                                <span class="material-symbols-outlined text-indigo-200">auto_awesome</span>
+                                <span class="text-xs font-bold uppercase tracking-widest text-indigo-100">AI Strategy Tip</span>
+                            </div>
+                            <h5 class="text-xl font-bold mb-4 leading-tight relative z-10">Competitors are winning with long-form captions on Tuesdays.</h5>
+                            <p class="text-indigo-100 text-sm mb-auto leading-relaxed relative z-10">
+                                Our analysis shows that accounts in your niche are seeing a 14% higher engagement rate when pairing detailed educational text with carousels on midweek mornings.
+                            </p>
+                            <button class="mt-8 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white py-3 rounded-2xl font-bold text-sm transition-colors relative z-10">
+                                Apply to My Calendar
+                            </button>
                         </div>
                         
                         <section class="bg-white dark:bg-card-dark rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
