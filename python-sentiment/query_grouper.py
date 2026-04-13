@@ -2,7 +2,7 @@ from typing import List, Dict
 
 QUERY_GROUPS = {
     "pricing": ["price", "cost", "rate", "how much","money","buy","pp","price please","link","payment"],
-    "booking": ["book", "booking", "appointment", "order",""],
+    "booking": ["book", "booking", "appointment", "order",""schedule","reserve"],
     "availability": ["available", "slot", "in stock" ]
 }
 
