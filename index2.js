@@ -16,10 +16,6 @@ const client = new ApifyClient({
   token: process.env.APIFY_TOKEN,
 });
 
-if (!client) {
-  throw new Error("❌ Apify client failed to initialize");
-}
-
 console.log("✅ Apify client initialized");
 
 /* ================= CONFIG ================= */
@@ -226,6 +222,7 @@ export async function scrapeInstagram(username) {
 
     const rawConsistency =
       100 - (variance / (meanLikes || 1)) * 100;
+
     const consistencyScore = clamp(
       Math.max(rawConsistency, consistencyFloor),
       0,
@@ -244,12 +241,33 @@ export async function scrapeInstagram(username) {
       username,
       followers,
       accountTier: tier,
+
+      imagePosts: {
+        count: imagePosts.length,
+        averageLikes: Math.round(avg(imageLikes)),
+        averageComments: Math.round(avg(imageComments)),
+      },
+
+      reels: {
+        count: reels.length,
+        averageLikes: Math.round(avg(reelLikes)),
+        averageComments: Math.round(avg(reelComments)),
+        averageViews: Math.round(avg(reelViews)),
+      },
+
       topViewedPosts,
       commentsText,
       sentiment,
+
       profileHealth: {
         score: healthScore,
         engagementRate: Number(engagementRate.toFixed(2)),
+        weights,
+        components: {
+          engagement: Math.round(engagementScore),
+          growth: Math.round(growthScore),
+          consistency: Math.round(consistencyScore),
+        },
       },
     };
   } catch (error) {
