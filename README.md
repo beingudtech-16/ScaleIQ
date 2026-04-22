@@ -57,6 +57,7 @@ APIs & Data Sources
 Instagram – Public engagement and content data
 Apify API – Scalable scraping for posts, comments, and competitor analysis
 Analytics APIs – Performance and comparative metrics
+
 ⚙️ How It Works
 Fetches recent posts and engagement data for the user and competitors
 Normalizes posts, comments, and performance metrics
@@ -64,6 +65,7 @@ Filters high-signal comments based on engagement
 Runs sentiment and theme analysis
 Compares patterns across accounts and formats
 Converts insights into clear growth recommendations
+
 🎯 Who This Is For
 Small businesses
 Early-stage startups
