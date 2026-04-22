@@ -4,12 +4,12 @@ import { ApifyClient } from "apify-client";
 import axios from "axios";
 
 /* ================= ENV CHECK ================= */
-if (!process.env.APIFY_API_TOKEN) {
-  console.error("❌ APIFY_API_TOKEN is missing in environment variables");
-  throw new Error("APIFY_API_TOKEN is required");
+if (!process.env.APIFY_TOKEN) {
+  console.error("❌ APIFY_TOKEN is missing in environment variables");
+  throw new Error("APIFY_TOKEN is required");
 }
 
-console.log("✅ APIFY_API_TOKEN loaded");
+console.log("✅ APIFY_TOKEN loaded");
 
 /* ================= APIFY CLIENT ================= */
 const client = new ApifyClient({
